@@ -7,7 +7,19 @@ fetch("https://imdb8.p.rapidapi.com/auto-complete?q=game", {
 
 })
 .then(response => response.json())
-.then(data => console.log(data))
+.then(data => {
+    const contentList = data.d;
+
+    contentList.map((item) => {
+        const name = item.l;
+        const poster = item.i.imageUrl;
+        const movie = `<li><img src="${poster}"> <h2>${name}</h2></li>`
+        document.querySelector('.TV').innerHTML += movie;
+        
+        console.log(item)
+    })
+
+})
 .catch(err => {
     console.error(err);
 });
