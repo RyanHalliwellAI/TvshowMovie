@@ -1,55 +1,47 @@
-// fetch('https://imdb8.p.rapidapi.com/auto-complete?q=game&type=TV&first=500', {
-// 	method: 'GET',
-// 	headers: {
-// 		'x-rapidapi-key': '289ddbefabmsha3d3894436ad14ep1e9913jsnf611f2267b21',
-// 		'x-rapidapi-host': 'imdb8.p.rapidapi.com'
-// 	}
+// Wait for the DOM to be fully loaded before accessing elements
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
 
-// })
-// .then(response => response.json())
-// .then(data => {
-//     const contentList = data.d;
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-//     contentList.map((item) => {
-//         const name = item.l;
-//         const poster = item.i.imageUrl;
-//         const movie = `<li><img src="${poster}"> <h2>${name}</h2></li>`
-//         document.querySelector('.TV').innerHTML += movie;
-        
-//         console.log(item)
-//     })
+        // Get input values
+        const searchTerm = document.getElementById('tvShowMovie').value;
+        const isTVShow = document.getElementById('tv-show-checkbox').checked;
+        const isMovie = document.getElementById('movie-checkbox').checked;
 
-// })
-// .catch(err => {
-//     console.error(err);
-// });
+        // Construct URL based on inputs
+        const type = isTVShow ? 'TV' : 'MOVIE';
+        const url = `https://imdb8.p.rapidapi.com/v2/search?searchTerm=${searchTerm}&type=${type}&first=500`;
 
-const url = 'https://imdb8.p.rapidapi.com/v2/search?searchTerm=game&type=TV&first=500';
-const options = {
-	method: 'GET',
-	headers: {
-		'x-rapidapi-key': '289ddbefabmsha3d3894436ad14ep1e9913jsnf611f2267b21',
-		'x-rapidapi-host': 'imdb8.p.rapidapi.com'
-	}
-};
+        // Call a function to fetch data using the constructed URL
+        fetchData(url);
+    });
 
-async function fetchData() {
-	try {
+
+
+
+async function fetchData(url) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': '289ddbefabmsha3d3894436ad14ep1e9913jsnf611f2267b21',
+            'x-rapidapi-host': 'imdb8.p.rapidapi.com'
+        }
+    };
+    try {
 		const response = await fetch(url, options);
 		const result = await response.json();
+        console.log("TEST RESULT:" + result);
+
         const testResult = result.data.mainSearch.edges;
         for (let i = 0; i <= testResult.length; i++) {
-           console.log(testResult[i].node.entity.originalTitleText.text);
+            const name = testResult[i].node.entity.originalTitleText.text;
+            const poster = testResult[i].node.entity.primaryImage.url;
+            const movie = `<li><img src="${poster}"> <h2>${name}</h2></li>`
+            document.querySelector('.TV').innerHTML += movie;
         }
-    //     const list =  result.d;
-    //     list.map((item) => {
-    //         const name = item.l;
-    //         const poster = item.i.imageUrl;
-    //         const movie = `<li><img src="${poster}"> <h2>${name}</h2></li>`
-    //         document.querySelector('.TV').innerHTML += movie;
-            
-    //         console.log(item)
-    // })
+
 
 
 
@@ -59,6 +51,4 @@ async function fetchData() {
 		console.error(error);
 	}
 }
-
-fetchData();
-
+});
