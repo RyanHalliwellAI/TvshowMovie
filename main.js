@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Construct URL based on inputs
         const type = isTVShow ? 'tv' : 'movie';
-        const url = `https://api.themoviedb.org/3/search/${type}?query=${searchTerm}`
+        const url = `https://api.themoviedb.org/3/search/${type}?query=${searchTerm}&sort_by=popularity.desc`
 
         fetchData(url,type);
     });
@@ -56,6 +56,19 @@ document.addEventListener('DOMContentLoaded', function() {
 // 	}
 // }
 // });
+let titles = [];
+let input = document.getElementById('tvShowMovie').value;
+
+searchForm.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    console.log(titles);
+    for(let i of titles)
+    {
+        console.log(i);
+    }
+})
+
+
 
 const options = {
     method: 'GET',
@@ -76,27 +89,36 @@ const options = {
             console.log(testResult);
         document.querySelector('.TV').innerHTML = '';
         for (let i = 0; i <= testResult.length; i++) {
+            let name, rating, releaseDate, overview, poster, movie;
+
             if(type == "tv")
             {
-            const name = testResult[i].name;
-            const rating = testResult[i].vote_average;
-            const releaseDate = testResult[i].first_air_date;
-            const overview = testResult[i].overview;
-            const poster = testResult[i].poster_path;
-            const movie = `<li><img src="https://image.tmdb.org/t/p/w500${poster}"> <h2>${name}</h2> <h2>${rating}</h2><h2>${releaseDate}</h2><h2>${overview}</h2><button id = btn${i}">Select</button</li>`
-            document.querySelector('.TV').innerHTML += movie;
+            name = testResult[i].name;
+            titles.push(name);
+            rating = testResult[i].vote_average;
+            releaseDate = testResult[i].first_air_date;
+            overview = testResult[i].overview;
+            poster = testResult[i].poster_path;
             }
             else if(type == "movie")
             {
-            console.log("movie");
-            const name = testResult[i].original_title;
-            const rating = testResult[i].vote_average;
-            const releaseDate = testResult[i].release_date;
-            const overview = testResult[i].overview;
-            const poster = testResult[i].poster_path;
-            const movie = `<li><img src="https://image.tmdb.org/t/p/w500${poster}"> <h2>${name}</h2> <h2>${rating}</h2><h2>${releaseDate}</h2><h2>${overview}</h2><button id = btn${i}">Select</button</li>`
-            document.querySelector('.TV').innerHTML += movie;
+            name = testResult[i].original_title;
+            rating = testResult[i].vote_average;
+            releaseDate = testResult[i].release_date;
+            overview = testResult[i].overview;
+            poster = testResult[i].poster_path;
             }
+
+            movie = `
+            <li>
+                <a href="#" data-name="${name}" data-poster="${poster}" data-rating="${rating}" data-release-date="${releaseDate}" data-overview="${overview}" onclick="saveAndRedirect(this)">
+                    <img src="https://image.tmdb.org/t/p/w500${poster}" alt="${name}">
+                    <h2>${name}</h2>
+                </a>
+            </li>
+        `;
+        
+        document.querySelector('.TV').innerHTML += movie;
 
    
 
@@ -113,3 +135,30 @@ const options = {
     // const result = response.results;
     // console.log(result);
 });
+
+//creating function to save the selected tv show or moive and redirect to saved tv show page.
+function saveAndRedirect(element)
+{
+    const name = element.getAttribute('data-name');
+    const poster = element.getAttribute('data-poster');
+    const rating = element.getAttribute('data-rating');
+    const releaseDate = element.getAttribute('data-release-date');
+    const overview = element.getAttribute('data-overview');
+
+
+    const savedItem = {
+        name,
+        poster,
+        rating,
+        releaseDate,
+        overview
+    };
+    let savedItems = JSON.parse(localStorage.getItem('savedItems')) || [];
+    savedItems.push(savedItem);
+    localStorage.setItem('savedItems', JSON.stringify(savedItems));
+    window.location.href = 'saved.html';
+
+}
+
+
+
