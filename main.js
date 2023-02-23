@@ -1,21 +1,21 @@
-// // Wait for the DOM to be fully loaded before accessing elements
-// // When the button is clicked for submit, it will get values, and put the into the url and send them to the API
-// document.addEventListener('DOMContentLoaded', function() {
-//     const searchForm = document.getElementById('searchForm');
+// Wait for the DOM to be fully loaded before accessing elements
+// When the button is clicked for submit, it will get values, and put the into the url and send them to the API
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
 
-//     searchForm.addEventListener('submit', function(event) {
-//         event.preventDefault(); 
-//         // input values
-//         const searchTerm = document.getElementById('tvShowMovie').value;
-//         const isTVShow = document.getElementById('tv-show-checkbox').checked;
-//         const isMovie = document.getElementById('movie-checkbox').checked;
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        // input values
+        const searchTerm = document.getElementById('tvShowMovie').value;
+        const isTVShow = document.getElementById('tv-show-checkbox').checked;
+        const isMovie = document.getElementById('movie-checkbox').checked;
 
-//         // Construct URL based on inputs
-//         const type = isTVShow ? 'TV' : 'MOVIE';
-//         const url = `https://imdb8.p.rapidapi.com/v2/search?searchTerm=${searchTerm}&type=${type}&first=5`;
+        // Construct URL based on inputs
+        const type = isTVShow ? 'tv' : 'movie';
+        const url = `https://api.themoviedb.org/3/search/${type}?query=${searchTerm}`
 
-//         fetchData(url);
-//     });
+        fetchData(url,type);
+    });
 
 
 
@@ -64,15 +64,43 @@ const options = {
       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMjc2OWU1ZTI1NDc5YzQ1ZTk4ZTMyOGIyNmUxNWY0YyIsIm5iZiI6MTcyMDE4MzI0MS43NDc1NTgsInN1YiI6IjY2ODdlODMzZWM4YTI2ZGMyMGRlZjY2NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1tuB-Ny6dPdf0UacaY1KqfqSgxIHVi_JOFni5nIIFxw'
     }
   };
-  
-  fetch('https://api.themoviedb.org/3/search/tv?query=game&include_adult=false&language=en-US&page=1', options)
+
+  function fetchData(url, type)
+  {
+    console.log(type);
+    fetch(url, options)
     .then(response => response.json())
     .then(response => 
         {
             const testResult = response.results;
-            console.log(testResult.length);
+            console.log(testResult);
+        document.querySelector('.TV').innerHTML = '';
         for (let i = 0; i <= testResult.length; i++) {
-            console.log(testResult[i].name);
+            if(type == "tv")
+            {
+            const name = testResult[i].name;
+            const rating = testResult[i].vote_average;
+            const releaseDate = testResult[i].first_air_date;
+            const overview = testResult[i].overview;
+            const poster = testResult[i].poster_path;
+            const movie = `<li><img src="https://image.tmdb.org/t/p/w500${poster}"> <h2>${name}</h2> <h2>${rating}</h2><h2>${releaseDate}</h2><h2>${overview}</h2><button id = btn${i}">Select</button</li>`
+            document.querySelector('.TV').innerHTML += movie;
+            }
+            else if(type == "movie")
+            {
+            console.log("movie");
+            const name = testResult[i].original_title;
+            const rating = testResult[i].vote_average;
+            const releaseDate = testResult[i].release_date;
+            const overview = testResult[i].overview;
+            const poster = testResult[i].poster_path;
+            const movie = `<li><img src="https://image.tmdb.org/t/p/w500${poster}"> <h2>${name}</h2> <h2>${rating}</h2><h2>${releaseDate}</h2><h2>${overview}</h2><button id = btn${i}">Select</button</li>`
+            document.querySelector('.TV').innerHTML += movie;
+            }
+
+   
+
+            
 
         }
 
@@ -80,6 +108,8 @@ const options = {
         })
 
     .catch(err => console.error(err));
+  }
+
     // const result = response.results;
     // console.log(result);
-
+});
