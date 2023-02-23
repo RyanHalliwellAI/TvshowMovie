@@ -4,14 +4,14 @@ body
 {
     background: white
 }
-.TV
+.TV, .saved-items
 {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
 
-.TV li
+.TV li, .saved-items li
 {
     flex: 1;
     display: flex;
@@ -25,12 +25,12 @@ body
     background: #272727;
 
 }
-.TV li img
+.TV li img, .saved-items li img
 {
     max-width: 300px;
     border-radius: 12px;
 }
-.TV li h2
+.TV li h2,  .saved-items li h2
 {
     color: #fff;
     font-size: 1.8em;
