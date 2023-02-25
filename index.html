@@ -10,10 +10,11 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mb-4">TV Show and Movie Tracker</h1>
+        <h1 class="text-center mb-4">TV Show and Movie Tracker</h1><br>
+        <button onclick="forward()">forward</button><br>
         <form id="searchForm" class="mb-5">
             <div class="form-group">
-                <label for="tvShowMovie">Enter Movie or TV Show:</label>
+                <br><label for="tvShowMovie">Enter Movie or TV Show:</label>
                 <input type="text" class="form-control" id="tvShowMovie" name="tvShowMovie" placeholder="Type here...">
             </div>
             <div class="form-check">
@@ -33,4 +34,11 @@
     <script src="main.js"></script>
 </body>
 </html>
-    
+<script>
+function forward()
+{
+    window.location.href = 'saved.html';
+
+}
+</script>
+

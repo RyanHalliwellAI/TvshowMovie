@@ -56,19 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // 	}
 // }
 // });
-let titles = [];
-let input = document.getElementById('tvShowMovie').value;
-
-searchForm.addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    console.log(titles);
-    for(let i of titles)
-    {
-        console.log(i);
-    }
-})
-
-
 
 const options = {
     method: 'GET',
@@ -95,7 +82,6 @@ const options = {
             if(type == "tv")
             {
             name = testResult[i].name;
-            titles.push(name);
             rating = testResult[i].vote_average;
             releaseDate = testResult[i].first_air_date;
             overview = testResult[i].overview;
@@ -151,7 +137,7 @@ function saveAndRedirect(element)
     let savedItems = JSON.parse(localStorage.getItem('savedItems')) || [];
     savedItems.push(savedItem);
     localStorage.setItem('savedItems', JSON.stringify(savedItems));
-    window.location.href = 'saved.html';
+    //window.location.href = 'saved.html';
 
 }
 
