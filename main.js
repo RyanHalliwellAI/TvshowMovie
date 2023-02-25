@@ -78,6 +78,7 @@ const options = {
     }
   };
 
+  //Gets all the relevant titles and names and then adds them to html
   function fetchData(url, type)
   {
     console.log(type);
@@ -119,14 +120,7 @@ const options = {
         `;
         
         document.querySelector('.TV').innerHTML += movie;
-
-   
-
-            
-
         }
-
-
         })
 
     .catch(err => console.error(err));
@@ -153,6 +147,7 @@ function saveAndRedirect(element)
         releaseDate,
         overview
     };
+    //creates an array with current storage, if not then its an empty array, adds to array, sets local storage, then goes to other page.
     let savedItems = JSON.parse(localStorage.getItem('savedItems')) || [];
     savedItems.push(savedItem);
     localStorage.setItem('savedItems', JSON.stringify(savedItems));

@@ -1,4 +1,5 @@
 //load items from saved local storage
+//gets it from local storages, creates a container, then goes through all saved intems in loop to add to page.
 document.addEventListener('DOMContentLoaded', function() {
     const savedItems = JSON.parse(localStorage.getItem('savedItems')) || [];
     const savedItemsContainer = document.querySelector('.saved-items');
