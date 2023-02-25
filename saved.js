@@ -1,19 +1,38 @@
-//load items from saved local storage
-//gets it from local storages, creates a container, then goes through all saved intems in loop to add to page.
+//this is a event istener for when the page is loaded. It will load and then add the saved storaage data to the webpage
 document.addEventListener('DOMContentLoaded', function() {
     const savedItems = JSON.parse(localStorage.getItem('savedItems')) || [];
     const savedItemsContainer = document.querySelector('.saved-items');
     
     savedItems.forEach(item => {
         const movie = `
-            <li>
+        <li data-name="${item.name}">
+            <a href="#" data-name="${item.name}" data-poster="${item.poster}" data-rating="${item.rating}" data-release-date="${item.releaseDate}" data-overview="${item.overview}" onclick="saveAndRedirect(this)">
                 <img src="https://image.tmdb.org/t/p/w500${item.poster}" alt="${item.name}">
                 <h2>${item.name}</h2>
-                <p>Rating: ${item.rating}</p>
-                <p>Release Date: ${item.releaseDate}</p>
-                <p>${item.overview}</p>
-            </li>
+            </a>
+            <button class="remove-button">Remove</button>
+        </li>
         `;
         savedItemsContainer.innerHTML += movie;
+    });
+
+    //takes all the remove buttons for the movies, and then if one of them are pressed
+    //it will obtained which one was pressed, the item, and the name.
+    //it will ask the user if they want to remove it, then will filter out the saved items based on the movie name
+    //it will update the storage, and update the page.
+    document.querySelectorAll('.remove-button').forEach(button => {
+        button.addEventListener('click', function(event) {
+            const movieItem = event.target.closest('li');
+            const movieName = movieItem.getAttribute('data-name');
+
+            if (confirm('Are you sure you want to remove this show?')) {
+                // Remove from local storage
+                const updatedItems = savedItems.filter(item => item.name !== movieName);
+                localStorage.setItem('savedItems', JSON.stringify(updatedItems));
+                
+                // Remove from the page
+                movieItem.remove();
+            }
+        });
     });
 });

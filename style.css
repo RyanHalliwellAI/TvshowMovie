@@ -11,6 +11,16 @@ body
     flex-wrap: wrap;
 }
 
+
+/* Main container should also take full height */
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Center text within the container */
+    flex-direction: column; /* Stack items vertically */
+}
+
 .TV li, .saved-items li
 {
     flex: 1;
