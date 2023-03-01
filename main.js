@@ -101,9 +101,11 @@ const options = {
                 <a href="#" data-name="${name}" data-poster="${poster}" data-rating="${rating}" data-release-date="${releaseDate}" data-overview="${overview}" onclick="saveAndRedirect(this)">
                     <img src="https://image.tmdb.org/t/p/w500${poster}" alt="${name}">
                     <h2>${name}</h2>
+                    <button onclick="addToWatchlist(this.parentElement)">Add to watchlist</button>
                 </a>
             </li>
         `;
+
         
         document.querySelector('.TV').innerHTML += movie;
         }
@@ -138,6 +140,29 @@ function saveAndRedirect(element)
     savedItems.push(savedItem);
     localStorage.setItem('savedItems', JSON.stringify(savedItems));
     //window.location.href = 'saved.html';
+
+}
+//creating function to save the selected tv show or moive and redirect to saved tv show page.
+function addToWatchlist(element)
+{
+    const name = element.getAttribute('data-name');
+    const poster = element.getAttribute('data-poster');
+    const rating = element.getAttribute('data-rating');
+    const releaseDate = element.getAttribute('data-release-date');
+    const overview = element.getAttribute('data-overview');
+
+
+    const savedItemWatchlist = {
+        name,
+        poster,
+        rating,
+        releaseDate,
+        overview
+    };
+    //creates an array with current storage, if not then its an empty array, adds to array, sets local storage, then goes to other page.
+    let savedItemsWatchlist = JSON.parse(localStorage.getItem('savedItemsWatchlist')) || [];
+    savedItemsWatchlist.push(savedItemWatchlist);
+    localStorage.setItem('savedItemsWatchlist', JSON.stringify(savedItemsWatchlist));
 
 }
 

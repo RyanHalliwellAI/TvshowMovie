@@ -4,7 +4,7 @@ body
 {
     background: white
 }
-.TV, .saved-items
+.TV, .saved-items, .saved-itemsW
 {
     width: 100%;
     display: flex;
@@ -21,7 +21,7 @@ body
     flex-direction: column; /* Stack items vertically */
 }
 
-.TV li, .saved-items li
+.TV li, .saved-items li, .saved-itemsW li
 {
     flex: 1;
     display: flex;
@@ -35,12 +35,12 @@ body
     background: #272727;
 
 }
-.TV li img, .saved-items li img
+.TV li img, .saved-items li img, .saved-itemsW, li img
 {
     max-width: 300px;
     border-radius: 12px;
 }
-.TV li h2,  .saved-items li h2
+.TV li h2,  .saved-items li h2, .saved-itemsW li h2
 {
     color: #fff;
     font-size: 1.8em;
@@ -48,11 +48,11 @@ body
     margin-top: auto;
     font-family: "Oswlad", sans-serif;
 }
-.TV li a {
+.TV li a, .saved-itemsW li a {
     color: inherit;
     text-decoration: none;
 }
-.saved-items li p {
+.saved-items li p, .saved-itemsW li p {
     color: #fff;
     font-size: 1.2em;
     padding: 5px 0;
