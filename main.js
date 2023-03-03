@@ -11,11 +11,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const isMovie = document.getElementById('movie-checkbox').checked;
 
         // Construct URL based on inputs
-        const type = isTVShow ? 'tv' : 'movie';
+        // const type = isTVShow ? 'tv' : 'movie';
         const url = `https://api.themoviedb.org/3/search/${type}?query=${searchTerm}&sort_by=popularity.desc`
 
         fetchData(url,type);
     });
+
+
+const fs  = require("fs");
+const csv = require('csvtojson');
+const { Parser } = require('json2csv');
+
+(async () => {
+    const tvShows = await csv().fromFile("tvshows.csv");
+    console.log(tvShows);
+
+
+
+
+})();
+
+
+
+    
 
 
 

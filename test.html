@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMDb Data</title>
+</head>
+<body>
+  <div id="content"></div>
+  <script>
+    async function fetchData() {
+      const response = await fetch('https://www.imdb.com/title/tt0386676/');
+      const data = await response.json();
+
+      document.getElementById('content').innerHTML = `
+        <h1>${data.Title}</h1>
+        <p>${data.Plot}</p>
+        <p>Director: ${data.Director}</p>
+        <p>Actors: ${data.Actors}</p>
+      `;
+    }
+
+    fetchData();
+  </script>
+</body>
+</html>

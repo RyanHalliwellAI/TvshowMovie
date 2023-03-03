@@ -24,12 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function(event) {
             const movieItem = event.target.closest('li');
             const movieName = movieItem.getAttribute('data-name');
-            if (localStorage.getItem('savedItemsWatchlist') !== null) {
-                localStorage.removeItem('savedItemsWatchlist');
-                console.log('savedItemsWatchlist has been cleared');
-            }
-            // Optionally, you can refresh the page or update the UI to reflect the change
-            location.reload();
+            localStorage.removeItem('savedItemsWatchlist');
+
             if (confirm('Are you sure you want to remove this show?')) {
                 // Remove from local 
                 console.log(movieItem);
